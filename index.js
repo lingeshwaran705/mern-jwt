@@ -3,7 +3,6 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config();
 const port = process.env.PORT || 5001;
-const router = require("./routes/goalRoutes");
 const { corsOptions } = require("./config/corsOptions");
 const connectDB = require("./config/db");
 
@@ -11,7 +10,8 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 connectDB();
-app.use("/api/goals", router);
+app.use("/api/goals", require("./routes/goalRoutes"));
+app.use("/api/user", require("./routes/userRoutes"));
 
 app.use("/", (req, res) => {
   res.json({ message: "server is running" });
